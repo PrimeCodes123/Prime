@@ -1,6 +1,6 @@
 import os
 from library.functions import calc_balance, financial_status
-from library.classes_10 import Budget
+from library.classes import Budget
 
 os.system('cls' if os.name == 'nt' else 'clear')
 
