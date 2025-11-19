@@ -1,6 +1,6 @@
 import os
-from library import functions
-from library.classes import Budget
+from library.functions import calc_balance, financial_status
+from library.classes_10 import Budget
 
 os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -11,20 +11,23 @@ print(f"Hey {name}, this is BudgetBuddy! Your personal Budgeting Assistant.")
 income = float(input("Enter your monthly income (only numbers): "))
 
 total_expenses = []
+budgets = []
 
-grocery = Budget("Grocery")
-car = Budget("Car")
+while True:
+    category = input("\nEnter a budget category (ex: grocery, car): ").strip()
+    budget_obj = Budget(category)
 
-grocery.add_expenses()
-car.add_expenses()
+    budget_obj.add_expenses()
+    total_expenses.append(budget_obj.get_expenses())
+    budgets.append(budget_obj)
 
-exp_grocery = grocery.get_expenses()
-total_expenses.append(exp_grocery)
+    more = input("\nDo you want to add another category? (yes/no): ").lower()
+    if more != "yes":
+        break
 
-total_expenses.append(car.get_expenses())
+total = sum(total_expenses)
+balance = calc_balance(income, total)
+financial_status(balance)
 
-bal = functions.calc_balance(income, sum(total_expenses))
-
-functions.financial_status(bal)
-
-grocery.get_expenses_list()
+for b in budgets:
+    b.get_expenses_list()
